@@ -1,3 +1,4 @@
+
 describe('Salsita test spec', () => {
   let sum = 0
   var testArray = []
