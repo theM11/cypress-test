@@ -1,9 +1,7 @@
-/// <reference types="cypress" />
-
-
 describe('Salsita test spec', () => {
+  let sum = 0
+  var testArray = []
   it('should visit page and do some action', () => {
-    var testArray = []
     cy.visit(Cypress.env('login_url'))
     cy.get('.enterButton').click()
     cy.url().should('include', '/code')
@@ -25,11 +23,10 @@ describe('Salsita test spec', () => {
     })
     cy.get('h2').get('strong').should('have.length', 2)
     cy.get('.score').each(x=>{
-      var value = parseInt(x.text())
-      testArray.push(value)
-      var result = testArray.reduce((a, b) => a + b, 0)
-      cy.log(result)
+      testArray.push(parseInt(x.text()))
+      sum = testArray.reduce((a, b) => a + b, 0)
+    }).then(() => {
+      cy.get('[id=summary]').invoke('text').should('eq','Total score: '+ sum)
     })
-    cy.get('[id=summary]').invoke('text')
   })
 })
